@@ -1,0 +1,151 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learn some words!</title>
+    <script src="{% static 'app/app.js' %}"></script>
+    <style>
+        input {
+            white-space: normal;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="icon" href="{% static 'app/favicon.ico' %}">
+</head>
+
+<body>
+    <div id="data" style="display: none;"> {{ data }}</div>
+    <div class="card text-center  text-bg-light">
+        <div class="card-header" id="header">Learn some words</div>
+        <div class="card-body">
+            <p class=" card-text" style="min-height: 60px;font-size: 30px;" id="text">
+                content</p>
+
+            <div class="row justify-content-end">
+                <div class="button-container">
+                    <button class="btn btn-md btn-light" id="pronounce">
+                        <img src="{% static 'app/icon.png' %}" width="25" />
+                    </button>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+        <div class="card text-center  text-bg-light" style="margin-bottom: 10px;">
+            <div class="card-body">
+                <p class=" card-text" style="min-height:60px; font-size: 30px;" id="sentence"></p>
+            </div>
+            <div class="card-footer">
+                <p id="footer"></p>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2" style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-primary btn-lg" id="translate">显示答案</button>
+
+        </div>
+        <div class="container text-center" id="allButtons" style="margin-bottom: 10px;">
+            <form action="{% url 'index'%}" method="post" id="save_form">
+                {% csrf_token %}
+                <input type="hidden" id="save" name="pressed_button" value=""></input>
+                <div class="row align-items-start" id="day0">
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-danger" data-value="0" value="重来 &#60;10分"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-warning" data-value="1" value="困难 一天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-primary" data-value="2" value="一般 两天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-success" data-value="7" value="简单 七天"></input>
+                    </div>
+                </div>
+                <div class="row align-items-start" id="day1">
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-danger" data-value="0" value="重来 &#60;10分"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-warning" data-value="1" value="困难 一天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-primary" data-value="2" value="一般 两天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-success" data-value="7" value="简单 七天"></input>
+                    </div>
+                </div>
+                <div class="row align-items-start" id="day2">
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-danger" data-value="0" value="重来 &#60;10分"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-warning" data-value="2" value="困难 两天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-primary" data-value="7" value="一般 七天"></input>
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" class="btn btn-success" data-value="14" value="简单 十四天"></input>
+                    </div>
+                </div>
+
+                <div class="row align-items-start" id="day7">
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-danger" data-value="0" value="重来 &#60;10分"></input>
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-primary" data-value="7" value="一般 七天"></input>
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-success" data-value="14" value="简单 十四天"></input>
+                    </div>
+                </div>
+                <div class="row align-items-start" id="day14">
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-danger" data-value="0" value="重来 &#60;10分"></input>
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-success" data-value="14" value="简单 十四天"></input>
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" class="btn btn-success" data-value="-1" value="简单 会了"></input>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <form action="{% url 'index'%}" method="post" id="finish" name="finish">
+            {% csrf_token %}
+
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
